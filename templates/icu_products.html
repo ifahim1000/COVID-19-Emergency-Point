@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Emergency Point | ICU list{% endblock title %}
+
+{% block content %}
+<main class="">
+        <section class="card-container pt-32 fs-4 bg-secondary">
+            {% if products %}
+            {% for prod in products %}
+            <div class="card mb-3 w-50 mx-auto h-50">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="http://127.0.0.1:8000/media/{{ prod.image }}" class="img-fluid rounded-start" alt="image" height="100px" width="100px">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"> <span class="fs-3 text-">{{ prod.name|truncatechars:45 }}</span></h5>
+                            <p class="card-text">{{ prod.description|truncatechars:45 }}</p>
+                            <h2>৳{{ prod.price }}</h2>
+                            <button class="btn-warning rounded text-white text-decoration-none p-2 mb-3"><a
+                                    href="product_details.html" class="text-white text-decoration-none">Show
+                                    details</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h4>No products to show</h4>
+            {% endif %}
+        </section>
+    </main>
+{% endblock content %}

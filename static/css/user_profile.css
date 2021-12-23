@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body
+{
+    overflow-x: hidden;
+}
+.containr{
+    position: relative;
+    width: 100%;
+}
+.navigaton
+{
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: #003147;
+    transition: 0.5s;
+    overflow: hidden;
+
+}
+.navigaton.active
+{
+    width: 60px;
+}
+.navigaton ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 0px;
+}
+.navigaton ul li
+{
+    position: relative;
+    width: 100%;
+    list-style: none;
+}
+.navigaton ul li:hover
+{
+    background: #03a9f4;
+}
+
+.navigaton ul li:nth-child(1)
+{
+    margin-bottom: 10px;
+
+}
+.navigaton ul li:nth-child(1):hover
+{
+    background: cornflowerblue;
+    font-size: 20px;
+}
+.navigaton ul li a
+{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: #fff;
+}
+.navigaton ul li a .icon
+{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+}
+.navigaton ul li a .icon .fa
+{
+    color: #fff;
+    font-size: 24px;
+}
+.navigaton ul li a .title
+{
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    white-space: nowrap;
+}
+
+.main
+{
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: #f5f5f5;
+    transition: 0.5s;
+}
+.main.active
+{
+    width: calc(100% - 60px);
+    left: 60px;
+}
+.main .topBar
+{
+    width: 100%;
+    background: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.toggle
+{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+.toggle::before
+{
+    content: '\f0c9';
+    font-family: fontAwesome;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    line-height: 60px;
+    font-size: 24px;
+     text-align: center;
+    color: #111;
+}
+.dashboardContentWithoutTopbar
+{
+    display: block;
+}
+.cardBox
+{
+   position: relative;
+   width: 100%;
+   padding: 20px;
+   display: grid;
+   grid-template-columns: repeat(4,1fr);
+   grid-gap: 20px;
+}
+.cardBox .card
+{
+    position: relative;
+background: #fff;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+cursor: default;
+border-radius: 10px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.cardBox .card .numbers
+{
+    position: relative;
+    font-size: 2em;
+    font-weight: 500;
+}
+.cardBox .card .cardName
+{
+    color: rgb(117, 117, 117);
+    font-size: 1.3em;
+}
+.cardBox .card .iconBox
+{
+    font-size: 2em;
+}
+.details
+{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+.details .graphHeader
+{
+width:100%;
+position: relative;
+background: #fff;
+padding: 20px;
+cursor: pointer;
+border-radius: 10px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.details .graphHeader .mapShow
+{
+    position: relative;
+    width: 100%;
+    height: 85%;
+    overflow: hidden;
+}
+.details .graphHeader img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top :0;
+    left:0;
+    object-fit: cover;
+}
+.details .recentOrders
+{
+    position: relative;
+    min-height: 530px;
+    background: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cardHeader
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.cardHeader h2{
+    font-weight: 600;
+}
+.btn
+{
+    position: relative;
+    padding: 5px 10px;
+    background: #03a9f4;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.details table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.details table thead td{
+    font-weight: 600;
+}
+.details .recentOrders table tr
+{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .recentOrders table tbody tr:last-child
+{
+    border-bottom: none;
+}
+.details .recentOrders table tbody tr:hover
+{
+    background: #03a9f4;
+    color: #fff;
+}
+.details .recentOrders table tr td
+{
+    padding: 9px 5px;
+}
+.details .recentOrders table thead tr td:last-child,
+.details .recentOrders table tbody tr td:last-child
+{
+    text-align: right;
+}
+.details .recentOrders table thead tr td:nth-child(2),
+.details .recentOrders table tbody tr td:nth-child(2)
+{
+    text-align: right;
+    padding-right: 20px;
+}
+.details .recentOrders table thead tr td:nth-child(3),
+.details .recentOrders table tbody tr td:nth-child(3)
+{
+    text-align: center;
+}
+.status
+{
+    position: relative;
+    padding: 2px 4px;
+    background: #f00;
+    color:#fff;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+.delivered
+{
+    background: chartreuse;
+}
+.pending
+{
+    background: #f9ca3f;
+}
+.inProgress
+{
+    background: red;
+}
+.ordersContentWithoutTopbar
+{
+    position: relative;
+    width: 100%;
+    padding-right: 20px;
+    padding-top: 20px;
+    display: none;
+}
+
+.ordersContentWithoutTopbar .recentOrders
+{
+    position: relative;
+    min-height: 530px;
+    background: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.ordersContentWithoutTopbar table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.ordersContentWithoutTopbar table thead td{
+    font-weight: 600;
+}
+.ordersContentWithoutTopbar .recentOrders table tr
+{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.ordersContentWithoutTopbar .recentOrders table tbody tr:last-child
+{
+    border-bottom: none;
+}
+.ordersContentWithoutTopbar .recentOrders table tbody tr:hover
+{
+    background: #03a9f4;
+    color: #fff;
+}
+.ordersContentWithoutTopbar .recentOrders table tr td
+{
+    padding: 9px 5px;
+}
+.ordersContentWithoutTopbar .recentOrders table thead tr td:last-child,
+.ordersContentWithoutTopbar .recentOrders table tbody tr td:last-child
+{
+    text-align: right;
+}
+.ordersContentWithoutTopbar .recentOrders table thead tr td:nth-child(2),
+.ordersContentWithoutTopbar .recentOrders table tbody tr td:nth-child(2)
+{
+    text-align: right;
+    padding-right: 20px;
+}
+.ordersContentWithoutTopbar .recentOrders table thead tr td:nth-child(3),
+.ordersContentWithoutTopbar .recentOrders table tbody tr td:nth-child(3)
+{
+    text-align: center;
+}
+.affiliateContentWithoutTopbar
+{
+    position: relative;
+    width: 100%;
+    padding-right: 20px;
+    padding-top: 20px;
+    display: none;
+}
+.affiliateCardBox
+{
+   position: relative;
+   width: 100%;
+   padding: 20px;
+   display: grid;
+   grid-template-columns: repeat(2,1fr);
+   grid-gap: 20px;
+}
+.affiliateCardBox .card
+{
+position: relative;
+background: #fff;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+cursor: default;
+border-radius: 10px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.affiliateCardBox .card .numbers
+{
+    position: relative;
+    font-size: 2em;
+    font-weight: 500;
+}
+.affiliateCardBox .card .cardName
+{
+    color: rgb(117, 117, 117);
+    font-size: 1.3em;
+}
+.affiliateCardBox .card .iconBox
+{
+    font-size: 2em;
+}
+.affiliateContentWithoutTopbar .affiliateTable
+{
+    position: relative;
+    height: auto;
+    background: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.affiliateContentWithoutTopbar table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tr
+{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr:last-child
+{
+    border-bottom: none;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr:hover
+{
+    background: #03a9f4;
+    color: #fff;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tr td
+{
+    padding: 9px 5px;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr td:last-child
+{
+    text-align: left;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr td:nth-child(1)
+{
+    text-align: center;
+    font-weight: 500;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr td:nth-child(2)
+{
+    text-align: left;
+}
+.affiliateContentWithoutTopbar .affiliateTable table tbody tr td:nth-child(3)
+{
+    text-align: center;
+    font-weight: 500;
+}
+.profileSettingsContentWithoutTopbar
+{
+    position: relative;
+    width: 100%;
+    padding-right: 20px;
+    padding-top: 20px;
+    display: none;
+}
+.profileSettingsContentWithoutTopbar .wholeSettings
+{
+    position: relative;
+    height: auto;
+    background: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.withoutUpdate
+{
+    display: block;
+}
+.withUpdate
+{
+    display: none;
+}

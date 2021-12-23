@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Emergency Point{% endblock title %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Sweet alert CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Sweet alert Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}">
+    <link rel="icon" href="{% static '/images/icon.jpg' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header class="header sticky-top">
+
+        <a href="/" class="logo text-decoration-none"><i class="fas fa-heartbeat"></i> Covid-19 Emergency Point </a>
+
+        <nav class="navbar">
+            <a href="home.html" class="text-decoration-none">home</a>
+            <a href="home.html#categories" class="text-decoration-none">categories</a>
+            <a href="home.html#review" class="text-decoration-none">review</a>
+        </nav>
+
+        <div class="icons">
+            <div class="fas fa-bars" id="menu-btn"></div>
+            <div class="fas fa-search" id="search-btn"></div>
+            <a href="/account/check"><div class="fas fa-user" id="login-btn"></div></a>
+            
+        </div>
+
+        <form action="" class="search-form">
+            <input type="search" id="search-box" placeholder="search here...">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+
+    </header>
+
+    <!-- header section ends -->
+
+    {% block content %}{% endblock content %}
+
+    <!-- review section ends -->
+
+    <!-- footer section starts  -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3> Covid-19 Emergency point <i class="fas fa-heartbeat"></i> </h3>
+                <p>Covid-19 is a world Pandemic. We are trying to help the people with our little. Be with us and make
+                    us
+                    better for the people.</p>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +880-1630826924</a>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +880-1938547222 </a>
+                <a href="#" class="links"> <i class="fas fa-envelope"></i> ifahim1000@gmail.com </a>
+                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Chittagong,Bangladesh</a>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="index.html" class="links"> <i class="fas fa-arrow-right"></i> home </a>
+                <a href="index.html#products" class="links"> <i class="fas fa-arrow-right"></i> products </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> categories </a>
+
+            </div>
+
+            <div class="box">
+                <h3>newsletter</h3>
+                <p>subscribe for latest updates</p>
+                <input type="email" placeholder="your email" class="email">
+                <input type="submit" value="subscribe" class="btn">
+                <img src="image/payment.png" class="payment-img" alt="">
+            </div>
+
+        </div>
+
+        <div class="credit"> created by <span> Emergency Point </span> | all rights reserved </div>
+
+    </section>
+
+    <!-- footer section ends -->
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <!-- custom js file link  -->
+    <script src="{% static '/js/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script>
+        {% if messages %}
+        {% for message in messages %}
+        alertify.alert('From the admin', '{{ message }}');
+        {% endfor %}
+        {% endif %}
+    </script>
+</body>
+
+</html>

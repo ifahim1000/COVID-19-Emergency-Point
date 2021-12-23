@@ -1,0 +1,452 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Provider Dashboard</title>
+    <script src="https://kit.fontawesome.com/25082eb7c1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/provider_profile.css' %}">
+    <link rel="icon" href="{% static '/images/icon.jpg' %}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="containr">
+        <div class="navigaton">
+            <ul>
+                <li>
+                    <a href="/">
+                        <span class="icon"><i class="fas fa-heartbeat"></i></span>
+                        <span class="title">COVID-19 Point</span>
+                    </a>
+                </li>
+                <li class="dashboard" id="dashboard" onclick="goToDashboard()">
+                    <a href="#" id="d_title">
+                        <span class="icon"><i class="fas fa-clinic-medical"></i></span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="orders" id="orders" onclick="goToOrders()">
+                    <a href="#" id="ord_title">
+                        <span class="icon"><i class="fas fa-cart-plus"></i></span>
+                        <span class="title">My Orders</span>
+                    </a>
+                </li>
+                <li class="affiliate" id="affiliate" onclick="goToAffiliate()">
+                    <a href="#" id="af_title">
+                        <span class="icon"><i class="fas fa-hands-helping"></i></span>
+                        <span class="title">My Product</span>
+                    </a>
+                </li>
+                <li class="profileSettings" id="profileSettings" onclick="goToProfileSettings()">
+                    <a href="#" id="se_title">
+                        <span class="icon"><i class="fas fa-cogs"></i></span>
+                        <span class="title">Profile Settings</span>
+                    </a>
+                </li>
+                <li class="signOut" id="signOut">
+                    <a href="/account/logout">
+                        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topBar">
+                <div class="toggle" onclick="toggleMenu()"></div>
+            </div>
+            <div class="dashboardContentWithoutTopbar" id="dashboardContentWithoutTopbar">
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ user.user.last_login|timesince }}</div>
+                            <div class="cardName">Last Login</div>
+                        </div>
+                        <div class="iconBox">
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ orders|length }}</div>
+                            <div class="cardName">Orders Completed</div>
+                        </div>
+                        <div class="iconBox">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ customers|length }}</div>
+                            <div class="cardName">Customers</div>
+                        </div>
+                        <div class="iconBox">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers"><a class="btn btn-alert" href="/add-product" role="button">+</a></div>
+                            <div class="cardName">Add product</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="details">
+                    <div class="graphHeader">
+                        <h2>Your Location</h2>
+                        <div id="map" class="mapShow" style="width:100%;height:400px;"></div>
+                    </div>
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>Recent Orders</h2>
+                            <a href="#" class="btn" onclick="goToOrders_frm_dash()">View all</a>
+                        </div>
+                        {% if orders %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                    <td>Payment</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders|slice:":5" %}
+                            <tr>
+                                    <td>{{ order.product.name }}</td>
+                                    <td>{{ order.price }}</td>
+                                    <td>
+                                    {% if order.status == "Delivered" %}
+                                    Paid
+                                    {% else %}
+                                    Due
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if order.status == "Delivered" %}
+                                    <span class="status delivered">Delivered</span>
+                                    {% elif order.status == "Pending" %}
+                                    <span class="status pending">Pending</span>
+                                    {% elif order.status == "In Progress" %}
+                                    <span class="status inProgress">In Progress</span>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h6>No orders to show</h6>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="ordersContentWithoutTopbar" id="ordersContentWithoutTopbar">
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ completed }} <i class="fas fa-calendar-check"></i></div>
+                            <div class="cardName">Completed</div>
+                        </div>
+                        
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ due }} <i class="fas fa-calendar-minus"></i></div>
+                            <div class="cardName">Due</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ inProgress }} <i class="fas fa-calendar-plus"></i></div>
+                            <div class="cardName">In Progress</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="recentOrders">
+                    {% if orders %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                    <td>Payment</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                    <td>{{ order.product.name }}</td>
+                                    <td>{{ order.price }}</td>
+                                    <td>
+                                    {% if order.status == "Delivered" %}
+                                    Paid
+                                    {% else %}
+                                    Due
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if order.status == "Delivered" %}
+                                    <span class="status delivered">Delivered</span>
+                                    {% elif order.status == "Pending" %}
+                                    <span class="status pending">Pending</span>
+                                    {% elif order.status == "In Progress" %}
+                                    <span class="status inProgress">In Progress</span>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h6>No orders to show</h6>
+                        {% endif %}
+                </div>
+            </div>
+            <div class="affiliateContentWithoutTopbar" id="affiliateContentWithoutTopbar">
+                <div class="affiliateCardBox">
+                    <div class="card">
+                    <div class="recentOrders">
+                    {% if products %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Action</td>
+                                    <td>    </td>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for prod in products %}
+                            <tr>
+                            <td><a class="btn btn-danger" href="/delete/{{prod.id}}" role="button">delete</a></td>
+                            <td><a class="btn btn-alert" href="/details/{{prod.id}}" role="button">view</a></td>
+                                    <td>{{ prod.name }}</td>
+                                    <td>{{ prod.price }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h6>No products to show</h6>
+                        {% endif %}
+                </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="profileSettingsContentWithoutTopbar mb-4" id="profileSettingsContentWithoutTopbar">
+                <p class="mx-3">Profile created at : {{user.created_date}}</p>
+                {% if user.image %}
+                <img src="http://127.0.0.1:8000/media/{{user.image}}" class="rounded-circle mb-4 mx-3" alt="Cinque Terre" height="100px" width="100px" style="border: 1px solid cyan;">
+                {% else %}
+                <img src="{% static '/images/account_icon.png' %}" class="rounded-circle mb-4 mx-3" alt="Cinque Terre" height="100px" width="100px" style="border: 1px solid cyan;">
+                {% endif %}
+                <div class="wholeSettings">
+                    <div class="withoutUpdate" id="withoutUpdate">
+                        <form class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label"><b>Your Name</b></label>
+                                <input class="form-control" type="text" value="{{ user.user.name }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"><b>Company Name</b></label>
+                                <input class="form-control" type="text" value="{{ user.company_name }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><b>Email Address</b></label>
+                                <input class="form-control" type="email" value="{{ user.user.email }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><b>Phone Number</b></label>
+                                <input type="phone" class="form-control" value="{{ user.user.phone }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label for="inputAddress" class="form-label"><b>Address</b></label>
+                                <input type="text" class="form-control" id="inputAddress" value="{{ user.user.address }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div>
+                                <a href="#" class="btn" onclick="profileUpdate()">Update</a>
+                                <button class="btn btn-primary" type="submit" disabled>Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="withUpdate" id="withUpdate">
+                        <form class="row g-3" method="POST" action="{% url 'update_profile' %}">
+                        {% csrf_token %}
+                            <div class="col-12">
+                                <label class="form-label"><b>Your Name</b></label>
+                                <input name="name" class="form-control" type="text" value="{{ user.user.name }}"
+                                    aria-label="readonly input example">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"><b>Company Name</b></label>
+                                <input name="company" class="form-control" type="text" value="{{ user.company_name }}"
+                                    aria-label="readonly input example">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><b>Email Address</b></label>
+                                <input name="email" class="form-control" type="email" value="{{ user.user.email }}"
+                                    aria-label="readonly input example" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><b>Phone Number</b></label>
+                                <input name="phone" type="phone" class="form-control" id="phone" value="{{ user.user.phone }}">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputAddress" class="form-label"><b>Address</b></label>
+                                <input name="address" type="text" class="form-control" id="inputAddress" value="{{ user.user.address }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label"><b>Password</b></label>
+                                <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                                    value="" placeholder="If you want to change password">
+                            </div>
+                            <div>
+                                <button type="update" class="btn btn-primary" disabled>Update</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        function myMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng({{user.latitude}}, {{user.longitude}}),
+                zoom: 14,
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng({{user.latitude}}, {{user.longitude}}),
+                map: map,
+            });
+        }
+
+        let dash_id = document.getElementById("dashboardContentWithoutTopbar");
+        let dash_title = document.getElementById("d_title");
+        let orders_id = document.getElementById("ordersContentWithoutTopbar");
+        let orders_tile = document.getElementById("ord_title");
+        let affiliate_id = document.getElementById("affiliateContentWithoutTopbar");
+        let affiliate_title = document.getElementById("af_title");
+        let settings_id = document.getElementById("profileSettingsContentWithoutTopbar");
+        let settings_title = document.getElementById("se_title");
+        let pro_withoutUpdate = document.getElementById("withoutUpdate");
+        let pro_withUpdate = document.getElementById("withUpdate");
+
+        //menu bar hide-show
+        function toggleMenu() {
+            let toggle = document.querySelector('.toggle');
+            let navigation = document.querySelector('.navigaton');
+            let main = document.querySelector('.main');
+            toggle.classList.toggle('active');
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //click view all in home page and redirect the page to orders
+        function goToOrders_frm_dash() {
+            let view_all_id = document.getElementById("dashboardContentWithoutTopbar");
+            let orders_id = document.getElementById("ordersContentWithoutTopbar");
+            view_all_id.style.display = "none";
+            orders_id.style.display = "block";
+            dash_title.style.background = "#003147";
+            orders_tile.style.background = "#03a9f4";
+        }
+
+        function goToDashboard() {
+
+            dash_id.style.display = "block";
+            settings_id.style.display = "none";
+            affiliate_id.style.display = "none";
+            orders_id.style.display = "none";
+
+
+            settings_title.style.background = "#003147";
+            affiliate_title.style.background = "#003147";
+            orders_tile.style.background = "#003147";
+            dash_title.style.background = "#03a9f4";
+        }
+        function goToOrders() {
+
+            orders_id.style.display = "block";
+            dash_id.style.display = "none";
+            affiliate_id.style.display = "none";
+            settings_id.style.display = "none";
+
+
+            settings_title.style.background = "#003147";
+            affiliate_title.style.background = "#003147";
+            dash_title.style.background = "#003147";
+            orders_tile.style.background = "#03a9f4";
+        }
+        function goToAffiliate() {
+            affiliate_id.style.display = "block";
+            settings_id.style.display = "none";
+            orders_id.style.display = "none";
+            dash_id.style.display = "none";
+
+            settings_title.style.background = "#003147";
+            affiliate_title.style.background = "#03a9f4";
+            orders_tile.style.background = "#003147";
+            dash_title.style.background = "#003147";
+
+        }
+        function goToProfileSettings() {
+            orders_id.style.display = "none";
+            dash_id.style.display = "none";
+            affiliate_id.style.display = "none";
+            settings_id.style.display = "block";
+            pro_withoutUpdate.style.display = "block";
+            pro_withUpdate.style.display = "none";
+
+            affiliate_title.style.background = "#003147";
+            orders_tile.style.background = "#003147";
+            dash_title.style.background = "#003147";
+            settings_title.style.background = "#03a9f4";
+        }
+
+        function profileUpdate() {
+
+            pro_withoutUpdate.style.display = "none";
+            pro_withUpdate.style.display = "block";
+            document.getElementById("phone").focus();
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDF2WFzSqP8hd5sse56ng4_xJ8Gwyg9Xc&callback=myMap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+        </script>
+</body>
+
+
+</html>

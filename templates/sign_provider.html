@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Point | SignUp Provider</title>
+    <link rel="icon" href="{% static '/images/icon.jpg' %}" type="image/x-icon">
+    <!-- css file add  -->
+    <link rel="stylesheet" href="{% static '/css/sign_provider.css' %}">
+    <!-- bootstrap linking  -->
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <!-- Sweet alert CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Sweet alert Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+</head>
+
+<body>
+    <section class="h-100 bg-dark">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                            <div class="col-xl-6 mx-auto">
+                                <form action="{% url 'signup_provider' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="card-body p-md-5 text-black">
+                                        <h3 class="mb-5 text-uppercase">Provider registration form</h3>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="form3Example1m">Full name</label>
+                                                    <input name="name" type="text" id="name"
+                                                        class="form-control form-control-lg" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="form3Example1m1">Email</label>
+                                                    <input name="email" type="email" id="email"
+                                                        class="form-control form-control-lg" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="form3Example97">Phone Number</label>
+                                            <input name="phone" type="number" id="number"
+                                                class="form-control form-control-lg" required />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="form3Example1m">Company Name</label>
+                                                    <input name="company" type="text" id="name"
+                                                        class="form-control form-control-lg" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="form3Example1m">Details
+                                                        Address</label>
+                                                    <input name="address" type="text" id="name"
+                                                        class="form-control form-control-lg" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="password">Password</label>
+                                                    <input name="password" type="password" id="password"
+                                                        class="form-control form-control-lg" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col">Your image</div>
+                                            <div class="col">{{ form }}</div>
+                                        </div>
+                                        <div id="map" style="width:100%;height:400px;"></div>
+                                        <div class="row my-4">
+                                            <div class="col-md-6">
+                                                <div class="form-outline">
+                                                    <input name="lat" type="text" id="lat"
+                                                        class="form-control form-control-lg"
+                                                        placeholder="latitude of location" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-outline">
+                                                    <input name="long" type="text" id="long"
+                                                        class="form-control form-control-lg"
+                                                        placeholder="longitude of location" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end pt-3">
+                                            <button type="submit" class="btn btn-success btn-lg ms-2">Submit
+                                                form</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{% static '/js/bootstrap.bundle.min.js' %} "></script>
+    <script src="{% static '/js/sign_provider.js' %}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDF2WFzSqP8hd5sse56ng4_xJ8Gwyg9Xc&callback=myMap"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script>
+        {% if messages %}
+        {% for message in messages %}
+        alertify.alert('From the admin', '{{ message }}');
+        {% endfor %}
+        {% endif %}
+    </script>
+</body>
+
+</html>

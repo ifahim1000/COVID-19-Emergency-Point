@@ -1,0 +1,7 @@
+Search result for {{ search }} <br>
+
+{% for prod in all_products %}
+<a href="/details/{{prod.id}}">{{prod.name}}</a><br>
+        {{prod.description}} <br>
+        <img src="http://127.0.0.1:8000/media/{{prod.image}}" alt="image"  height="100px" width="100px"><br>
+{% endfor %}

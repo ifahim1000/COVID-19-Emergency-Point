@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Emergency Point | Medicine products{% endblock title %}
+
+{% block content %}
+<section class="sproduct my-5 pt-5">
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-12">
+                <img src="http://127.0.0.1:8000/media/{{ product.image }}" width="100%" height="300px" class="small-img" alt="">
+            </div>
+            <div class="col-lg-6 col-md-12 col-12">
+                <h3>{{ product.name }}</h3>
+                <h2>৳{{ product.price }}</h2>
+                <form action="/order/{{ product.id }}" method="post">
+                    {% csrf_token %}
+                    <input name="quantity" type="number" class="border rounded m-3 p-3" value="1">
+                    <input type="text" name="code" id="code" class="border rounded m-3 p-3" placeholder="Any voucher code(if any)">
+                    <button type="submit" class="buy-btn bg-dark text-white m-3 p-3 rounded">Buy now</button>
+                </form>
+                <h3 class="mt-5 mb-3">Product Details </h3>
+                <span>{{ product.description }}</span>
+                <div class="card mt-5">
+                    <div class="container my-3">
+                        {% for review in reviews %}
+                        <h5>{{ review.user.name }}</h5>
+                        <p style="color: grey; font-size: 12px;">{{ review.created_at }}</p>
+                        <p style="font-size: 16px;">{{ review.comment }}</p>
+                        <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+                <form action="/review/{{ product.id }}" method="post">
+                    {% csrf_token %}
+                    <h3 class="pt-5">Add a comment</h3>
+                    <textarea name="cmnt" id="cmnt" cols="30" rows="5" class="w-100 border rounded" placeholder="Write a review..."></textarea>
+                    <button class="buy-btn bg-dark text-white m-3 p-3 rounded" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
